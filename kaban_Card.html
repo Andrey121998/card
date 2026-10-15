@@ -1,22 +1,18 @@
 <!-- ===== ПЕРЕКЛЮЧАТЕЛЬ СТРАНИЦ ===== -->
 <div class="sheet-tabs">
-  <button type="action" name="act_main" class="sheet-tab-btn">Главная</button>
-  <button type="action" name="act_skills" class="sheet-tab-btn">Навыки</button>
-  <button type="action" name="act_talents" class="sheet-tab-btn">Таланты</button>
-  <button type="action" name="act_equipment" class="sheet-tab-btn">Снаряжение</button>
-  <button type="action" name="act_magic" class="sheet-tab-btn">Магия</button>
+  <button type="action" name="act_main" class="sheet-tab-btn" data-tab="main">Главная</button>
+  <button type="action" name="act_skills" class="sheet-tab-btn" data-tab="skills">Навыки</button>
+  <button type="action" name="act_talents" class="sheet-tab-btn" data-tab="talents">Таланты</button>
+  <button type="action" name="act_equipment" class="sheet-tab-btn" data-tab="equipment">Снаряжение</button>
+  <button type="action" name="act_magic" class="sheet-tab-btn" data-tab="magic">Магия</button>
 </div>
 
-<!-- Скрытый атрибут, который хранит текущую вкладку -->
-<input type="hidden" name="attr_sheet_tab" value="main">
-
 <!-- ===== ВКЛАДКА: ГЛАВНАЯ ===== -->
-<div class="sheet-page sheet-page-main">
+<div class="sheet-page sheet-page-main active">
 
   <!-- Верхний блок: портрет, имя, профессия/раса -->
   <div class="sheet-top">
     <div class="sheet-portrait">
-      <!-- Портрет импортируется из профиля листа -->
       <img name="attr_character_avatar" src="" alt="Портрет">
     </div>
 
@@ -50,10 +46,7 @@
 
     <div class="sheet-resilience">
       <span>Устойчивость</span>
-      <button type="roll" name="roll_resilience"
-        value="&{template:default} {{name=Устойчивость}} {{Бросок=[[1d10]]}} {{Результат=[[1d10]] vs Телосложение}}">
-        Бросить 1d10
-      </button>
+      <button type="action" name="act_roll_resilience">Бросить 1d10</button>
       <div class="sheet-hint">
         Успех, если бросок меньше макс. Телосложения.<br>
         1 — всегда успех, 10 — всегда провал.
@@ -124,7 +117,6 @@
     <div class="sheet-slot">
       <select name="attr_quick_skill_1">
         <option value="">— выберите навык —</option>
-        <!-- Заполним позже -->
       </select>
       <button type="action" name="act_lock_qskill1">🔒</button>
     </div>
@@ -170,7 +162,125 @@
 <!-- ===== ВКЛАДКА: НАВЫКИ ===== -->
 <div class="sheet-page sheet-page-skills">
   <h2>Навыки</h2>
-  <p>Будет реализовано на следующем шаге.</p>
+
+  <!-- ===== ПАНЕЛЬ МОДИФИКАТОРОВ ===== -->
+  <div class="sheet-mods-panel">
+    <h3>Модификаторы</h3>
+    <div class="sheet-mods-columns">
+
+      <!-- Колонка: Мп (место попадания) -->
+      <div class="sheet-mods-col">
+        <h4>Мп (место попадания)</h4>
+        <fieldset class="repeating_mods_mp">
+          <div class="sheet-mod-row">
+            <input type="number" name="attr_mod_value" value="0" class="sheet-mod-value">
+            <select name="attr_mod_target" class="sheet-mod-target">
+              <option value="">— выберите цель —</option>
+            </select>
+            <button type="action" name="act_lock_mod_mp" class="sheet-lock">🔒</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Колонка: Травмы -->
+      <div class="sheet-mods-col">
+        <h4>Травмы</h4>
+        <fieldset class="repeating_mods_injury">
+          <div class="sheet-mod-row">
+            <input type="number" name="attr_mod_value" value="0" class="sheet-mod-value">
+            <select name="attr_mod_target" class="sheet-mod-target">
+              <option value="">— выберите цель —</option>
+            </select>
+            <button type="action" name="act_lock_mod_injury" class="sheet-lock">🔒</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Колонка: Общие -->
+      <div class="sheet-mods-col">
+        <h4>Общие</h4>
+        <fieldset class="repeating_mods_general">
+          <div class="sheet-mod-row">
+            <input type="number" name="attr_mod_value" value="0" class="sheet-mod-value">
+            <select name="attr_mod_target" class="sheet-mod-target">
+              <option value="">— выберите цель —</option>
+            </select>
+            <button type="action" name="act_lock_mod_general" class="sheet-lock">🔒</button>
+          </div>
+        </fieldset>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== КАТЕГОРИЯ: ИНТЕЛЛЕКТ ===== -->
+  <div class="sheet-skill-category sheet-category-intellect">
+    <div class="sheet-category-header">
+      <button type="action" name="act_toggle_intellect" class="sheet-category-toggle">▼</button>
+      <h3>Интеллект</h3>
+      <span class="sheet-category-attr-label">Характеристика: @{intellect}</span>
+      <button type="action" name="act_lock_intellect_skill" class="sheet-lock">🔒</button>
+    </div>
+
+    <div class="sheet-category-body">
+      <!-- Навык: Образование -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Образование</span>
+        <input type="number" name="attr_skill_education" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_education" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_education" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Тактика -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Тактика</span>
+        <input type="number" name="attr_skill_tactics" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_tactics" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_tactics" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Монстрология -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Монстрология</span>
+        <input type="number" name="attr_skill_monsterology" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_monsterology" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_monsterology" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Торговля -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Торговля</span>
+        <input type="number" name="attr_skill_trade" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_trade" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_trade" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Природа -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Природа</span>
+        <input type="number" name="attr_skill_nature" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_nature" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_nature" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Дедукция -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Дедукция</span>
+        <input type="number" name="attr_skill_deduction" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_deduction" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_deduction" class="sheet-skill-roll">Бросок</button>
+      </div>
+
+      <!-- Навык: Ориентирование в городе -->
+      <div class="sheet-skill-row">
+        <span class="sheet-skill-name">Ориентирование в городе</span>
+        <input type="number" name="attr_skill_city_orientation" value="0" class="sheet-skill-value">
+        <button type="action" name="act_lock_city_orientation" class="sheet-lock">🔒</button>
+        <button type="action" name="act_roll_city_orientation" class="sheet-skill-roll">Бросок</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ===== ВКЛАДКА: ТАЛАНТЫ ===== -->
@@ -195,8 +305,8 @@
 <script type="text/worker">
 
   // ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ЧЕРЕЗ $20 =====
-  // $20 доступен внутри Sheet Worker. Он умеет: .on(), .addClass(), .removeClass(), .toggleClass()
-  // Состояние НЕ сохраняется при закрытии листа — это нормально для теста.
+  // ВАЖНО: без CSS вкладки не будут скрываться. Класс .active просто навешивается.
+  // CSS добавим позже.
 
   const tabs = ['main', 'skills', 'talents', 'equipment', 'magic'];
 
@@ -207,9 +317,49 @@
         $20(`.sheet-tab-btn[data-tab="${t}"]`).removeClass('active');
         $20(`.sheet-page-${t}`).removeClass('active');
       });
-      // Ставим active на выбранную
       $20(`.sheet-tab-btn[data-tab="${tab}"]`).addClass('active');
       $20(`.sheet-page-${tab}`).addClass('active');
+    });
+  });
+
+  // ===== СВОРАЧИВАНИЕ КАТЕГОРИЙ =====
+  // ВАЖНО: без CSS тело категории не скроется. Класс .collapsed просто навешивается.
+  // CSS добавим позже.
+
+  const categories = ['intellect', 'reflexes', 'constitution', 'speed',
+                      'empathy', 'craft', 'will', 'ownership'];
+
+  categories.forEach(cat => {
+    $20(`button[name="act_toggle_${cat}"]`).on('click', () => {
+      $20(`.sheet-category-${cat}`).toggleClass('collapsed');
+    });
+  });
+
+  // ===== БРОСКИ НАВЫКОВ =====
+  // Список: [атрибут навыка, атрибут характеристики, читаемое имя]
+  const skillRolls = [
+    ['skill_education', 'intellect', 'Образование'],
+    ['skill_tactics', 'intellect', 'Тактика'],
+    ['skill_monsterology', 'intellect', 'Монстрология'],
+    ['skill_trade', 'intellect', 'Торговля'],
+    ['skill_nature', 'intellect', 'Природа'],
+    ['skill_deduction', 'intellect', 'Дедукция'],
+    ['skill_city_orientation', 'intellect', 'Ориентирование в городе']
+  ];
+
+  skillRolls.forEach(([skillAttr, statAttr, label]) => {
+    on(`clicked:roll_${skillAttr.replace('skill_', '')}`, function() {
+      getAttrs([skillAttr, statAttr], function(values) {
+        const skill = parseInt(values[skillAttr]) || 0;
+        const stat = parseInt(values[statAttr]) || 0;
+        const roll = Math.floor(Math.random() * 10) + 1;
+        const total = roll + skill + stat;
+
+        const output = `&{template:default} {{name=${label}}} {{Бросок=[[1d10]]}} {{Навык=${skill}}} {{Характеристика=${stat}}} {{Итого=${total}}}`;
+        startRoll(output, (results) => {
+          finishRoll(results.rollId);
+        });
+      });
     });
   });
 
