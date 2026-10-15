@@ -7,6 +7,9 @@
   <button type="action" name="act_magic" class="sheet-tab-btn">Магия</button>
 </div>
 
+<!-- Скрытый атрибут, который хранит текущую вкладку -->
+<input type="hidden" name="attr_sheet_tab" value="main">
+
 <!-- ===== ВКЛАДКА: ГЛАВНАЯ ===== -->
 <div class="sheet-page sheet-page-main">
 
@@ -164,20 +167,26 @@
 
 </div>
 
-<!-- ===== ОСТАЛЬНЫЕ ВКЛАДКИ (пока пустые заглушки) ===== -->
-<div class="sheet-page sheet-page-skills" style="display:none;">
+<!-- ===== ВКЛАДКА: НАВЫКИ ===== -->
+<div class="sheet-page sheet-page-skills">
   <h2>Навыки</h2>
   <p>Будет реализовано на следующем шаге.</p>
 </div>
-<div class="sheet-page sheet-page-talents" style="display:none;">
+
+<!-- ===== ВКЛАДКА: ТАЛАНТЫ ===== -->
+<div class="sheet-page sheet-page-talents">
   <h2>Таланты</h2>
   <p>Будет реализовано на следующем шаге.</p>
 </div>
-<div class="sheet-page sheet-page-equipment" style="display:none;">
+
+<!-- ===== ВКЛАДКА: СНАРЯЖЕНИЕ ===== -->
+<div class="sheet-page sheet-page-equipment">
   <h2>Снаряжение</h2>
   <p>Будет реализовано на следующем шаге.</p>
 </div>
-<div class="sheet-page sheet-page-magic" style="display:none;">
+
+<!-- ===== ВКЛАДКА: МАГИЯ ===== -->
+<div class="sheet-page sheet-page-magic">
   <h2>Магия</h2>
   <p>Будет реализовано на следующем шаге.</p>
 </div>
@@ -185,18 +194,26 @@
 <!-- ===== SHEET WORKER ===== -->
 <script type="text/worker">
 
-  // Переключение вкладок
-  const pages = ['main', 'skills', 'talents', 'equipment', 'magic'];
+  // ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ЧЕРЕЗ $20 =====
+  // $20 доступен внутри Sheet Worker. Он умеет: .on(), .addClass(), .removeClass(), .toggleClass()
+  // Состояние НЕ сохраняется при закрытии листа — это нормально для теста.
 
-  pages.forEach(page => {
-    on(`clicked:${page}`, function() {
-      pages.forEach(p => {
-        setAttrs({ [`page_${p}_visible`]: (p === page ? '1' : '0') });
+  const tabs = ['main', 'skills', 'talents', 'equipment', 'magic'];
+
+  tabs.forEach(tab => {
+    $20(`.sheet-tab-btn[data-tab="${tab}"]`).on('click', () => {
+      // Снимаем active со всех кнопок и страниц
+      tabs.forEach(t => {
+        $20(`.sheet-tab-btn[data-tab="${t}"]`).removeClass('active');
+        $20(`.sheet-page-${t}`).removeClass('active');
       });
+      // Ставим active на выбранную
+      $20(`.sheet-tab-btn[data-tab="${tab}"]`).addClass('active');
+      $20(`.sheet-page-${tab}`).addClass('active');
     });
   });
 
-  // Бросок устойчивости с проверкой
+  // ===== БРОСОК УСТОЙЧИВОСТИ =====
   on('clicked:roll_resilience', function() {
     getAttrs(['constitution'], function(values) {
       const con = parseInt(values.constitution) || 10;
