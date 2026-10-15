@@ -1,0 +1,223 @@
+<!-- ===== ПЕРЕКЛЮЧАТЕЛЬ СТРАНИЦ ===== -->
+<div class="sheet-tabs">
+  <button type="action" name="act_main" class="sheet-tab-btn">Главная</button>
+  <button type="action" name="act_skills" class="sheet-tab-btn">Навыки</button>
+  <button type="action" name="act_talents" class="sheet-tab-btn">Таланты</button>
+  <button type="action" name="act_equipment" class="sheet-tab-btn">Снаряжение</button>
+  <button type="action" name="act_magic" class="sheet-tab-btn">Магия</button>
+</div>
+
+<!-- ===== ВКЛАДКА: ГЛАВНАЯ ===== -->
+<div class="sheet-page sheet-page-main">
+
+  <!-- Верхний блок: портрет, имя, профессия/раса -->
+  <div class="sheet-top">
+    <div class="sheet-portrait">
+      <!-- Портрет импортируется из профиля листа -->
+      <img name="attr_character_avatar" src="" alt="Портрет">
+    </div>
+
+    <div class="sheet-name-block">
+      <input type="text" name="attr_character_name" placeholder="Имя персонажа" class="sheet-name-input">
+    </div>
+
+    <div class="sheet-profession-race">
+      <label>Профессия</label>
+      <input type="text" name="attr_profession" placeholder="Профессия">
+      <label>Раса</label>
+      <input type="text" name="attr_race" placeholder="Раса">
+    </div>
+  </div>
+
+  <!-- Здоровье / Выносливость / Устойчивость -->
+  <div class="sheet-vitals">
+    <div class="sheet-health">
+      <span>Здоровье</span>
+      <input type="number" name="attr_health_current" value="0">
+      <span>/</span>
+      <input type="number" name="attr_health_max" value="0">
+    </div>
+
+    <div class="sheet-stamina">
+      <span>Выносливость</span>
+      <input type="number" name="attr_stamina_current" value="0">
+      <span>/</span>
+      <input type="number" name="attr_stamina_max" value="0">
+    </div>
+
+    <div class="sheet-resilience">
+      <span>Устойчивость</span>
+      <button type="roll" name="roll_resilience"
+        value="&{template:default} {{name=Устойчивость}} {{Бросок=[[1d10]]}} {{Результат=[[1d10]] vs Телосложение}}">
+        Бросить 1d10
+      </button>
+      <div class="sheet-hint">
+        Успех, если бросок меньше макс. Телосложения.<br>
+        1 — всегда успех, 10 — всегда провал.
+      </div>
+    </div>
+  </div>
+
+  <!-- Характеристики -->
+  <div class="sheet-attributes">
+    <h3>Характеристики</h3>
+    <div class="sheet-attr-grid">
+      <div class="sheet-attr">
+        <span>Интеллект</span>
+        <input type="number" name="attr_intellect" value="10">
+        <button type="action" name="act_lock_intellect" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Рефлексы</span>
+        <input type="number" name="attr_reflexes" value="10">
+        <button type="action" name="act_lock_reflexes" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Телосложение</span>
+        <input type="number" name="attr_constitution" value="10">
+        <button type="action" name="act_lock_constitution" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Скорость</span>
+        <input type="number" name="attr_speed" value="10">
+        <button type="action" name="act_lock_speed" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Ремесло</span>
+        <input type="number" name="attr_craft" value="10">
+        <button type="action" name="act_lock_craft" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Воля</span>
+        <input type="number" name="attr_will" value="10">
+        <button type="action" name="act_lock_will" class="sheet-lock">🔒</button>
+      </div>
+      <div class="sheet-attr">
+        <span>Удача</span>
+        <input type="number" name="attr_luck" value="10">
+        <button type="action" name="act_lock_luck" class="sheet-lock">🔒</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Статус-эффекты -->
+  <div class="sheet-effects">
+    <h3>Статус-эффекты</h3>
+    <div class="sheet-effects-grid">
+      <label><input type="checkbox" name="attr_effect_burning"> Горение</label>
+      <label><input type="checkbox" name="attr_effect_frostbite"> Обморожение</label>
+      <label><input type="checkbox" name="attr_effect_hunger"> Голод</label>
+      <label><input type="checkbox" name="attr_effect_fatigue"> Усталость</label>
+      <label><input type="checkbox" name="attr_effect_bleeding"> Кровотечение</label>
+      <label><input type="checkbox" name="attr_effect_poison"> Отравление</label>
+      <label><input type="checkbox" name="attr_effect_stun"> Ошеломление</label>
+      <label><input type="checkbox" name="attr_effect_disorientation"> Дезориентация</label>
+    </div>
+  </div>
+
+  <!-- Окна навыков (3 слота) -->
+  <div class="sheet-quick-skills">
+    <h3>Навыки</h3>
+    <div class="sheet-slot">
+      <select name="attr_quick_skill_1">
+        <option value="">— выберите навык —</option>
+        <!-- Заполним позже -->
+      </select>
+      <button type="action" name="act_lock_qskill1">🔒</button>
+    </div>
+    <div class="sheet-slot">
+      <select name="attr_quick_skill_2">
+        <option value="">— выберите навык —</option>
+      </select>
+      <button type="action" name="act_lock_qskill2">🔒</button>
+    </div>
+    <div class="sheet-slot">
+      <select name="attr_quick_skill_3">
+        <option value="">— выберите навык —</option>
+      </select>
+      <button type="action" name="act_lock_qskill3">🔒</button>
+    </div>
+  </div>
+
+  <!-- Окна оружия (3 слота) -->
+  <div class="sheet-quick-weapons">
+    <h3>Оружие</h3>
+    <div class="sheet-slot">
+      <select name="attr_quick_weapon_1">
+        <option value="">— выберите оружие —</option>
+      </select>
+      <button type="action" name="act_lock_qweapon1">🔒</button>
+    </div>
+    <div class="sheet-slot">
+      <select name="attr_quick_weapon_2">
+        <option value="">— выберите оружие —</option>
+      </select>
+      <button type="action" name="act_lock_qweapon2">🔒</button>
+    </div>
+    <div class="sheet-slot">
+      <select name="attr_quick_weapon_3">
+        <option value="">— выберите оружие —</option>
+      </select>
+      <button type="action" name="act_lock_qweapon3">🔒</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== ОСТАЛЬНЫЕ ВКЛАДКИ (пока пустые заглушки) ===== -->
+<div class="sheet-page sheet-page-skills" style="display:none;">
+  <h2>Навыки</h2>
+  <p>Будет реализовано на следующем шаге.</p>
+</div>
+<div class="sheet-page sheet-page-talents" style="display:none;">
+  <h2>Таланты</h2>
+  <p>Будет реализовано на следующем шаге.</p>
+</div>
+<div class="sheet-page sheet-page-equipment" style="display:none;">
+  <h2>Снаряжение</h2>
+  <p>Будет реализовано на следующем шаге.</p>
+</div>
+<div class="sheet-page sheet-page-magic" style="display:none;">
+  <h2>Магия</h2>
+  <p>Будет реализовано на следующем шаге.</p>
+</div>
+
+<!-- ===== SHEET WORKER ===== -->
+<script type="text/worker">
+
+  // Переключение вкладок
+  const pages = ['main', 'skills', 'talents', 'equipment', 'magic'];
+
+  pages.forEach(page => {
+    on(`clicked:${page}`, function() {
+      pages.forEach(p => {
+        setAttrs({ [`page_${p}_visible`]: (p === page ? '1' : '0') });
+      });
+    });
+  });
+
+  // Бросок устойчивости с проверкой
+  on('clicked:roll_resilience', function() {
+    getAttrs(['constitution'], function(values) {
+      const con = parseInt(values.constitution) || 10;
+      const roll = Math.floor(Math.random() * 10) + 1;
+      let result = '';
+
+      if (roll === 1) {
+        result = '✅ Успех (1 — всегда успех)';
+      } else if (roll === 10) {
+        result = '❌ Провал (10 — всегда провал)';
+      } else if (roll < con) {
+        result = '✅ Успех';
+      } else {
+        result = '❌ Провал';
+      }
+
+      const output = `&{template:default} {{name=Устойчивость}} {{Бросок=[[${roll}]]}} {{Телосложение=${con}}} {{Результат=${result}}}`;
+      startRoll(output, (results) => {
+        finishRoll(results.rollId);
+      });
+    });
+  });
+
+</script>

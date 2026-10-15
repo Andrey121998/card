@@ -1,0 +1,55 @@
+/* Скрытие/показ вкладок */
+.sheet-page {
+  display: none;
+}
+.sheet-page-main,
+.sheet-page-skills,
+.sheet-page-talents,
+.sheet-page-equipment,
+.sheet-page-magic {
+  display: block;
+}
+
+/* Простая сетка для характеристик */
+.sheet-attr-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.sheet-effects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.sheet-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.sheet-portrait img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid #000;
+}
+
+.sheet-vitals {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.sheet-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.sheet-slot {
+  display: flex;
+  gap: 4px;
+  margin: 4px 0;
+}
